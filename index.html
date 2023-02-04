@@ -92,13 +92,39 @@
       width: 36px;
       cursor: pointer;
     }
+    ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    rgb(255, 255, 255);
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color:    rgb(255, 255, 255);
+      opacity:  1;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color:    rgb(255, 255, 255);
+      opacity:  1;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+      color:    rgb(255, 255, 255);
+    }
+    ::-ms-input-placeholder { /* Microsoft Edge */
+      color:    rgb(255, 255, 255);
+    }
+
+    ::placeholder { /* Most modern browsers support this now. */
+      color:    rgb(255, 255, 255);
+    }
+    
   </style>
   <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  
 </head>
 
 <body class="h-screen flex flex-col bg-nord3">
+  <video autoplay loop muted plays-inline class="back-video-2">
+    <source src = "flower.mp4" type = "video/mp4">
+  </video>
   <!-- This example requires Tailwind CSS v2.0+ -->
-  <nav class="bg-nord3 border-gray-200 px-5 sm:px-4 py-2.5 rounded">
+  <nav class="px-5 sm:px-4 py-2.5 rounded">
     <div class="container flex flex-wrap justify-between items-center mx-auto">
       <a href="index_old.html" class="flex items-center">
           <img src="logo.svg" width="124" height="96" alt="Flowbite Logo" />
@@ -107,7 +133,7 @@
         <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
       </button>
       <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-        <ul class="flex flex-col p-4 mt-4 bg-nord3 rounded-lg border border-nord3 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-nord3 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+        <ul class="flex flex-col p-4 mt-4 bg-nord3 rounded-lg border border-nord3 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
           <li>
             <a href="index_old.html" class="block py-2 pr-4 pl-3 text-nord6 rounded bg-gradient-to-r hover:from-nord8 hover:to-nord9 md:hover:bg-transparent md:text-white md:hover:text-transparent md:hover:bg-clip-text md:hover:bg-gradient-to-r md:hover:from-nord9 md:hover:to-nord8 md:border-0 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">home</a>
           </li>
@@ -120,22 +146,21 @@
         </ul>
       </div>
     </div>
-    <hr class="mt-2 invisible sm:visible dark space-y-1 border-1 border-nord3">
   </nav>
   <div class="dark h-4/5 flex flex-col justify-center items-center border-3" method="GET">
     <form action="Sentis.html" class="dark sm:w-4/5 h-4/5 px-5 sm:px-20 sm:py-10 flex flex-col justify-center space-y-8" method="GET" id="addSenti">
       <div class="dark md:space-x-2 flex flex-col md:flex-row justify-center">
-        <h1 class="dark text-nord4 text-6xl font-light">i m &nbsp&nbsp m i s s i n g &nbsp&nbsp m y . . .</h1>
+        <h1 class="dark text-nord6 text-8xl font-light">i m &nbsp&nbsp m i s s i n g &nbsp&nbsp m y . . .</h1>
       </div>
 
       <div class="flex flex-col justify-between space-y-3">
         <textarea id="message" rows="4" style="resize: none;"
-          class="text-xl block p-2.5 w-full text-gray-900 bg-gray-50 rounded-lg border border-nord2 focus:ring-nord2 focus:border-nord2 dark:bg-nord1 dark:border-nord0 dark:placeholder-gray-400 dark:text-nord8"
+          class="text-xl block p-2.5 w-full text-nord4 bg-transparent rounded-lg border border-nord2 focus:ring-nord4 focus:border-nord4 dark:bg-transparent dark:border-nord4 dark:placeholder-gray-400 dark:text-nord4"
           placeholder="describe what you lost and upload a picture below"></textarea>
         <div class="flex flex-row justify-between items-center">
           <div class="flex flex-row justify-left around font-light space-x-1 text-gray-500 dark:text-gray-400">
-            <p1 id="characters" class="text-sm font-bold">0</p1>
-            <p1 id="characterLabel" class="text-sm"> characters</p1>
+            <p1 id="characters" class="text-sm font-bold text-nord4">0</p1>
+            <p1 id="characterLabel" class="text-sm text-nord4"> characters</p1>
           </div>
         <form action="/action_page.php">
             <label for="img" class="text-nord4 text-l text-medium">Select image:</label>
@@ -148,14 +173,13 @@
     <div data-popper-arrow></div>
 </div>
             <button type="submit"
-              class="text-nord6 bg-gradient-to-r from-nord8 to-nord9 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-nord8 dark:focus:ring-nord9 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Submit</button>
+              class="text-nord6 bg-gradient-to-r from-nord2 to-nord3 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-nord0 dark:focus:ring-nord1 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Submit</button>
           </div>
         </div>
       </div>
     </form>
   </div>
   </div>
-  <hr class="space-y-1 border-1 border-nord3">
   <footer class="flex flex-1 flex-col justify-center items-center text-center">
   </footer>
   <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
