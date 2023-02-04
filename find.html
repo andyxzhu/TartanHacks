@@ -1,0 +1,532 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Senti | find sentis</title>
+  <meta name="description" content="See emotions on a anonymous dot density university map.">
+  <meta property="og:image" content="./senti-poster.png">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+  <link rel="manifest" href="./site.webmanifest">
+  <link rel="stylesheet" href="https://js.arcgis.com/4.24/esri/themes/dark/main.css" />
+  <script src="https://js.arcgis.com/4.24/"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/heatmap.js/2.0.0/heatmap.min.js"></script> -->
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'regal-blue': '#243c5a',
+            'nord0': '#2e3440',
+            'nord1': '#3b4252',
+            'nord2': '#434c5e',
+            'nord3': '#4c566a',
+            'nord4': '#d8dee9',
+            'nord5': '#e5e9f0',
+            'nord6': '#eceff4',
+            'nord7': '#8fbcbb',
+            'nord8': '#88c0d0',
+            'nord9': '#81a1c1',
+            'nord10': '#5e81ac',
+            'nord11': '#bf616a',
+            'nord12': '#d08770',
+            'nord13': '#ebcb8b',
+            'nord14': '#a3be8c',
+            'nord15': '#b48ead'
+          },
+          fontFamily: {
+            // sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+          }
+        }
+      }
+    }
+
+  </script>
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+
+
+
+
+
+</head>
+
+<body class="bg-nord0">
+  <!-- This example requires Tailwind CSS v2.0+ -->
+  <nav class="bg-nord0 border-gray-200 sm:px-4 pt-2.5 rounded">
+    <div class="px-5 container flex flex-wrap justify-between items-center mx-auto">
+      <a href="index.html" class="flex items-center">
+        <img src="senti-logo.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
+      </a>
+      <button data-collapse-toggle="navbar-default" type="button"
+        class="inline-flex items-center p-2 ml-3 text-sm text-nord6 rounded-lg md:hidden hover:bg-nord2 focus:outline-none focus:ring-2 focus:ring-nord3 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        aria-controls="navbar-default" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd"
+            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+            clip-rule="evenodd"></path>
+        </svg>
+      </button>
+      <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+        <ul
+          class="flex flex-col p-4 mt-4 bg-nord0 rounded-lg border border-nord3 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-nord0">
+          <li>
+            <a href="index.html"
+              class="block py-2 pr-4 pl-3 text-nord6 rounded bg-gradient-to-r hover:from-nord8 hover:to-nord9 md:hover:bg-transparent md:text-white md:hover:text-transparent md:hover:bg-clip-text md:hover:bg-gradient-to-r md:hover:from-nord9 md:hover:to-nord8 md:border-0 md:p-0">add
+              your senti</a>
+          </li>
+          <li>
+            <a href="find.html"
+              class="block py-2 pr-4 pl-3 text-nord6 bg-gradient-to-r from-nord8 to-nord9 hover:from-nord9 hover:to-nord8 rounded md:bg-transparent md:text-transparent md:bg-clip-text md:bg-gradient-to-r md:from-nord8 md:to-nord9 md:hover:from-nord9 md:hover:to-nord8 md:p-0"
+              aria-current="page">find senti</a>
+          </li>
+          <li>
+            <a href="sentis.html"
+              class="block py-2 pr-4 pl-3 text-nord6 rounded bg-gradient-to-r hover:from-nord8 hover:to-nord9 md:hover:bg-transparent md:text-white md:hover:text-transparent md:hover:bg-clip-text md:hover:bg-gradient-to-r md:hover:from-nord9 md:hover:to-nord8 md:border-0 md:p-0">see
+              senti</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <hr class="mt-2 invisible sm:visible dark border-1 border-nord3">
+  </nav>
+  <!-- <div
+    class="dark h-full mx-20 my-10 flex flex-row justify-center items-center space-x-2 sm:items-stretch sm:justify-start">
+    <h1 class="text-nord4 text-5xl">find</h1>
+    <h1 class="font-extrabold text-transparent text-5xl bg-clip-text bg-gradient-to-r from-nord8 to-nord9">
+      sentis.
+    </h1>
+  </div> -->
+
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+  <div id="viewDiv""></div>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    import { getDatabase, push, set, child, ref, onValue, get } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAHRbCmE_ynGBxlW0x5J9u9H3XBOrFhedA",
+      authDomain: "beyou-21d2f.firebaseapp.com",
+      databaseURL: "https://beyou-21d2f-default-rtdb.firebaseio.com",
+      projectId: "beyou-21d2f",
+      storageBucket: "beyou-21d2f.appspot.com",
+      messagingSenderId: "718679255077",
+      appId: "1:718679255077:web:a5d19b54e474a1d968b7cc",
+      measurementId: "G-FVD7M6CJ1Z"
+    };
+
+    const app = initializeApp(firebaseConfig);
+
+    // So we don't add duplicate posts
+    let current_posts_added = [];
+    // So we can access the current type in findPost / onValue
+    var types = ["See BeSads.", "See BeDowns.", "See BeContents.", "See BeHappys.", "See BeEcstatics."];
+    var type = document.getElementById("typeText");
+    var active = document.getElementById("content");
+
+    var postDatabase = getDatabase(app);
+
+
+    current_posts_added = []
+    const happyPost = ref(postDatabase);
+    var posts = child(happyPost, 'Posts');
+    // var grid = document.getElementById("beYouGrid");
+    // grid.innerHTML = "";
+
+    var array = [];
+
+    // onValue(posts, (snapshot) => {
+    //   snapshot.forEach(function (childSnapshot) {
+
+    //     // get current "be" subsection
+
+    //     console.log("----------------");
+    //     console.log(childSnapshot.val().text);
+    //     console.log(childSnapshot.val().type, childSnapshot.key);
+    //     console.log(childSnapshot.val().location);
+    //     console.log(childSnapshot.val().time);
+    //     array.push(
+    //       {
+    //         latitude: childSnapshot.val().location[0],
+    //         longitude: childSnapshot.val().location[1],
+    //         mag: childSnapshot.val().value / 100.,
+
+    //       });
+    //     console.log(current_posts_added);
+    //     console.log("SUCCESS");
+    //     current_posts_added.push(childSnapshot.key);
+
+    //     // Adding the html component
+    //     // grid.innerHTML += "<a href='#' class='dark bg-nord12 block w-full p-6 bg-nord1 rounded-lg border border-nord3 shadow-md hover:bg-nord2 dark:bg-nord1 dark:border-nord3 dark:hover:bg-nord3'> <h5 class='mb-2 text-2xl font-bold tracking-tight text-transparent text-3xl bg-clip-text bg-gradient-to-r from-nord8 to-nord9'>" + childSnapshot.val().location + "</h5> <p class='font-normal text-gray-700 dark:text-gray-400'>" + childSnapshot.val().time + "</p> </a>";
+    //   });
+    // });
+    console.log("START PRINT");
+    console.log(array);
+    require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/widgets/Legend", "esri/layers/CSVLayer", "esri/Graphic", "esri/geometry/Point"],
+      (Map, MapView, FeatureLayer, Legend, CSVLayer, Graphic, Point) => {
+        const defaultSym = {
+          type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+          outline: {
+            // autocasts as new SimpleLineSymbol()
+            color: "#FFFFFF",
+            opacity: 0,
+            width: 1
+          }
+        };
+
+        var array = [];
+
+        onValue(posts, (snapshot) => {
+          snapshot.forEach(function (childSnapshot) {
+
+            // get current "be" subsection
+
+            console.log("----------------");
+            console.log(childSnapshot.val().text);
+            console.log(childSnapshot.val().type, childSnapshot.key);
+            console.log(childSnapshot.val().location);
+            console.log(childSnapshot.val().time);
+
+            const location = new Point({
+                  latitude: childSnapshot.val().location[0],
+                  longitude: childSnapshot.val().location[1],
+                });
+
+            if (typeof childSnapshot.val().location != "string") {
+            
+              array.push(
+                new Graphic({
+                  geometry: location,
+                  attributes: {
+                    mag: childSnapshot.val().value / 100.,
+                    msg: childSnapshot.val().text,
+                    OBJECTID: childSnapshot.key,
+                  }
+  
+                }));
+            }
+            console.log(array);
+            console.log("SUCCESS");
+            current_posts_added.push(childSnapshot.key);
+            console.log("START PRINT  AAIN");
+            console.log(array);
+
+
+        //     const csv = `latitude|longitude|mag
+        // 40.418|20.553|0.1
+        // 40.445014|-79.943444|0.2
+        // 41.445014|-79.943444|0.6
+        // 40.5.445014|-79.943444|0.4
+        // 42.445014|-79.943444|0.7`;
+
+        //     const blob = new Blob([csv], {
+        //       type: "plain/text"
+        //     });
+        //     let url = URL.createObjectURL(blob);
+
+            // const povLayer = new CSVLayer({
+            //   url: url,
+            //   renderer: renderer,
+            //   title: "Poverty in the southeast U.S.",
+            //   popupTemplate: {
+            //     // autocasts as new PopupTemplate()
+            //     title: "{mag}",
+            //     content: "Sentiment: {mag}",
+            //     fieldInfos: [
+            //       {
+            //         fieldName: "mag",
+            //         format: {
+            //           digitSeparator: true,
+            //           places: 2
+            //         }
+            //       }
+            //     ]
+            //   }
+            // });
+          });
+          const renderer = {
+              type: "simple", // autocasts as new SimpleRenderer()
+              symbol: defaultSym, // the default symbol defined in step 1
+              label: "sentiment", // label for the legend
+              visualVariables: [
+                {
+                  type: "color", // indicates this is a color visual variable
+                  field: "mag", // total population in poverty
+                  stops: [
+                    {
+                      value: 0.0, // features where < 10% of the pop in poverty
+                      color: "#0095EF", // will be assigned this color (beige)
+                      label: "0.0" // label to display in the legend
+                    },
+                    {
+                      value: 1.0, // features where > 30% of the pop in poverty
+                      color: "#FE433C", // will be assigned this color (purple)
+                      label: "1.0" // label to display in the legend
+                    }
+                  ]
+
+                  // features with values between 0.1 - 0.3 will be assigned
+                  // a color on a ramp between beige and purple proportional
+                  // to where the value falls between 0.1 and 0.3
+                }
+              ]
+            };
+          const povLayer = new FeatureLayer({
+              objectIdField: "OBJECTID",
+              source: array,  // array of graphics objects
+              renderer: renderer,
+              fields: [
+              {
+                name: "OBJECTID",
+                type: "oid"
+              },  
+              {
+                name: "mag",
+                type: "double"
+              },  
+              {
+                name: "msg",
+                type: "string"
+              }],
+              geometryType: "point",
+              popupTemplate: {
+                // autocasts as new PopupTemplate()
+                title: "{mag}",
+                content: "{msg}",
+                fieldInfos: [
+                  {
+                    fieldName: "mag",
+                    format: {
+                      digitSeparator: true,
+                      places: 2
+                    }
+                  }
+                ]
+              }
+
+            });
+
+
+
+            const map = new Map({
+              basemap: "dark-gray-vector",
+              layers: [povLayer]
+            });
+
+            const view = new MapView({
+              container: "viewDiv",
+              map: map,
+              center: [-79.9428, 40.4432],
+              zoom: 15
+            });
+
+            /******************************************************************
+             *
+             * Add layers to layerInfos on the legend
+             *
+             ******************************************************************/
+
+            view.ui.add(
+              new Legend({
+                view: view
+              }),
+              "top-right"
+            );
+          });
+    });
+
+
+
+        //     /*****************************************************************
+        //      * Set a size visual variable on the renderer. Size visual variables
+        //      * create continuous ramps that map low data values to small icons
+        //      * and high data values to large icons. Features
+        //      * with data values in between the min and max data values are assigned
+        //      * a size proportionally between the min and max sizes specified in
+        //      * `minSize` and `maxSize` or `stops`.
+        //      *****************************************************************/
+
+        //     const renderer = {
+        //       type: "simple", // autocasts as new SimpleRenderer()
+        //       symbol: defaultSym, // the default symbol defined in step 1
+        //       label: "% population in poverty by county", // label for the legend
+        //       visualVariables: [
+        //         {
+        //           type: "color", // indicates this is a color visual variable
+        //           field: "mag", // total population in poverty
+        //           stops: [
+        //             {
+        //               value: 0.0, // features where < 10% of the pop in poverty
+        //               color: "#0095EF", // will be assigned this color (beige)
+        //               label: "0.0" // label to display in the legend
+        //             },
+        //             {
+        //               value: 1.0, // features where > 30% of the pop in poverty
+        //               color: "#FE433C", // will be assigned this color (purple)
+        //               label: "1.0%" // label to display in the legend
+        //             }
+        //           ]
+
+        //           // features with values between 0.1 - 0.3 will be assigned
+        //           // a color on a ramp between beige and purple proportional
+        //           // to where the value falls between 0.1 and 0.3
+        //         }
+        //       ]
+        //     };
+
+
+        // //     const csv = `latitude|longitude|mag
+        // // 40.418|20.553|0.1
+        // // 40.445014|-79.943444|0.2
+        // // 41.445014|-79.943444|0.6
+        // // 40.5.445014|-79.943444|0.4
+        // // 42.445014|-79.943444|0.7`;
+
+        // //     const blob = new Blob([csv], {
+        // //       type: "plain/text"
+        // //     });
+        // //     let url = URL.createObjectURL(blob);
+
+        //     // const povLayer = new CSVLayer({
+        //     //   url: url,
+        //     //   renderer: renderer,
+        //     //   title: "Poverty in the southeast U.S.",
+        //     //   popupTemplate: {
+        //     //     // autocasts as new PopupTemplate()
+        //     //     title: "{mag}",
+        //     //     content: "Sentiment: {mag}",
+        //     //     fieldInfos: [
+        //     //       {
+        //     //         fieldName: "mag",
+        //     //         format: {
+        //     //           digitSeparator: true,
+        //     //           places: 2
+        //     //         }
+        //     //       }
+        //     //     ]
+        //     //   }
+        //     // });
+
+        //     console.log("START PRINT  AAIN");
+        //     console.log(array);
+
+            
+
+        //     const povLayer = new FeatureLayer({
+        //       objectIdField: "OBJECTID",
+        //       source: array,  // array of graphics objects
+        //       renderer: renderer,
+        //       fields: [
+        //       {
+        //         name: "OBJECTID",
+        //         type: "oid"
+        //       },  
+        //       {
+        //         name: "mag",
+        //         type: "double"
+        //       }],
+        //       geometryType: "point",
+        //       popupTemplate: {
+        //         // autocasts as new PopupTemplate()
+        //         title: "{mag}",
+        //         content: "Sentiment: {mag}",
+        //         fieldInfos: [
+        //           {
+        //             fieldName: "mag",
+        //             format: {
+        //               digitSeparator: true,
+        //               places: 2
+        //             }
+        //           }
+        //         ]
+        //       }
+
+        //     });
+
+
+
+        //     const map = new Map({
+        //       basemap: "dark-gray-vector",
+        //       layers: [povLayer]
+        //     });
+
+        //     const view = new MapView({
+        //       container: "viewDiv",
+        //       map: map,
+        //       center: [-85.0502, 33.125524],
+        //       zoom: 5
+        //     });
+
+        //     /******************************************************************
+        //      *
+        //      * Add layers to layerInfos on the legend
+        //      *
+        //      ******************************************************************/
+
+        //     view.ui.add(
+        //       new Legend({
+        //         view: view
+        //       }),
+        //       "top-right"
+        //     );
+        //   });
+
+
+  </script>
+
+
+
+
+<!-- 
+  <div id="container-fluid" style="width: 1130px; height: 1000px; margin: 0 auto">
+    <iframe src="heatmap.html" width="1130" height="1000"></iframe>
+  </div>
+  <div id="container" style="width: 1200px; height: 650px; margin: 0 auto">
+    <iframe src="histogram.html" width="1200" height="650"></iframe>
+  </div>
+  <div id="calendar" style=" width: 1130px; height:400px; margin: 0 auto">
+    <iframe src="calendar.html" width="1130" height="400"></iframe>
+  </div> -->
+
+
+
+
+
+
+</body>
+
+
+<hr class="space-y-1 border-1 border-nord3">
+<footer class="h20 py-5 flex flex-1 flex-col justify-center items-center text-center">
+  <h2 class="text-nord4 text-l text-medium">Made with ❤️ by the <b>bonobo</b> team at HackCMU.</h2>
+</footer>
+<script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+
+
+
+
+
+
+
+</html>
