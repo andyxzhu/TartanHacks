@@ -77,6 +77,7 @@
             clip-rule="evenodd"></path>
         </svg>
       </button>
+      
       <div class="hidden w-full md:block md:w-auto" id="navbar-default">
         <ul class="flex flex-col p-4 mt-4 bg-nord3 rounded-lg border border-nord3 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-nord3 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
 
@@ -188,6 +189,7 @@
                   attributes: {
                     mag: 1.,
                     // mag: childSnapshot.val().value / 100.,
+                    time: childSnapshot.val().time, 
                     msg: childSnapshot.val().text,
                     OBJECTID: childSnapshot.key,
                   }
@@ -204,7 +206,7 @@
           const renderer = {
               type: "simple", // autocasts as new SimpleRenderer()
               symbol: defaultSym, // the default symbol defined in step 1
-              label: "sentiment", // label for the legend
+              label: "lost item", // label for the legend
               visualVariables: [
                 {
                   type: "color", // indicates this is a color visual variable
@@ -244,11 +246,15 @@
               {
                 name: "msg",
                 type: "string"
+              },  
+              {
+                name: "time",
+                type: "string"
               }],
               geometryType: "point",
               popupTemplate: {
                 // autocasts as new PopupTemplate()
-                title: "{mag}",
+                title: "{time}",
                 content: "{msg}",
                 fieldInfos: [
                   {
@@ -283,12 +289,12 @@
              *
              ******************************************************************/
 
-            view.ui.add(
-              new Legend({
-                view: view
-              }),
-              "top-right"
-            );
+            // view.ui.add(
+            //   new Legend({
+            //     view: view
+            //   }),
+            //   "top-right"
+            // );
           });
     });
 
