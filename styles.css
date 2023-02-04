@@ -1,0 +1,33 @@
+body {
+    animation: transitionIn 2s;
+}
+
+
+@keyframes transitionIn {
+    from{
+        opacity: 0;
+        transform: rotateX(-14deg);
+    }
+    to {
+        opacity: 1;
+        transform: rotateX(0);
+    }
+}
+
+.back-video{
+    position:absolute;
+    z-index: -1;
+}
+@media (min-aspect-ratio: 16/9){
+    .back-video{
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-aspect-ratio: 16/9){
+    .back-video{
+        width: auto;
+        height: 100%;
+    }
+}
